@@ -10,6 +10,7 @@ const startBtn = document.querySelector("[data-start]");
 const timer = document.querySelectorAll(".value");
 startBtn.disabled = true;
 let userSelectedDate;
+let isTimerActive = false;
 
 flatpickr(date, {
   enableTime: true,
@@ -26,8 +27,12 @@ flatpickr(date, {
 
     else {
       userSelectedDate = selectedDates[0].getTime();
-      startBtn.disabled = false;
-      startBtn.classList.add("active");
+
+      if (!isTimerActive) {
+        startBtn.disabled = false;
+        startBtn.classList.add("active")
+      };
+      
     }
   },
 });
@@ -35,6 +40,8 @@ flatpickr(date, {
 function start() {
   startBtn.disabled = true;
   startBtn.classList.remove("active");
+  date.disabled = true;
+  isTimerActive = true;
   
   const intervalId = setInterval(() => { 
     const currentTime = Date.now();
